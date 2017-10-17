@@ -1,47 +1,96 @@
 
-#include <studio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include<assert.h>
 #include "binarySearchTree.h"
 
-
-
 /* create a new tree*/
-BSTItem_s *llAlloc()
+struct BSTItem *llAlloc()
 {
-  BSTItem_s *tNode = (BSTItem_s *)malloc(sizeof(BSTItem_s));
+  BSTItem *tNode = (struct BSTItem *)malloc(sizeof(BSTItem));
   tNode = 0;
   return tNode;
 }
 
-BSTItem_s insertItem(BSTItem_s *head, char *newItem)
+struct BSTItem *insertItem (BSTItem *root, char *newItem)
 {
-  if(head == NULL){
-    head = llAlloc();
-    head -> str = strdup(newItem);
-    head -> left = NULL;
-    head -> right = NULL;
-    return head;
+  if(root == NULL){
+    root = llAlloc();
+    root -> str = strdup(newItem);
+    root -> left = NULL;
+    root -> right = NULL;
+    return root;
   }
-  else if(strcmp(newItem,head -> str) < 0){
-    head -> left = insertItem(head -> left, newItem);
+  else if(strcmp(newItem,root -> str) < 0){
+    root -> left = insertItem(root -> left, newItem);
   }
   else{
-    head -> right = insertItem(head -> right, newItem);
+    root -> right = insertItem(root -> right, newItem);
   }
   return head;
 }
 
-void removeItem(BST *bs)
+struct BSTItem  *removeItem(BSTItem *root, char *str)
 {
+  if(root == NULL){
+    return root;
+  }
+  if(strcmp(str, root -> str) < 0){
+    root -> left = removeItem(root -> left, str);
+  }
+  else if(strcmp(str, root -> str) > 0){
+    root -> right = removeItem(root -> right, str);
+  }
+  else{
+    if(root -> left == NULL){
+      struct BSTItem *temp = root -> right;
+      free(root);
+      return temp;
+    }
+    else if(root -> right == NULL) {
+      struct BSTItem *temp = root -> left;
+      free(root)
+      return temp;
+    }
+    struct node *temp = root-> right;
+    
+    while(temp -> left != NULL){
+      temp = temp -> left;
+    }
+    root -> str = temp -> str;
 
+    root -> right = removeItem(root ->right, temp->str);
+  }
+  return root;
 }
 
-void printItems(BSTItem_s *head)
+void printItems(BSTItem *head)
 {
   if(head != NULL){
     printItems(head -> left);
     printf("%s\n", head -> str);
     printItems(head -> right);
   }
+}
+
+char *strdup(char *str)
+{
+  char *copy;
+  copy = (char *) malloc(strlen(str) + 1);
+
+  if(copy != NULL){
+    for(len = 0; str[len]; len++)
+      copy[len] = str[len];
+    copy[len] = 0;
+  }
+  return copy;
+}
+
+int main()
+{
+  struct BSTItem *tree = NULL;
+  tree = insertItem(tree, "a");
+  //tree = insertItem(tree, "perro");
+
+  printItems(tree);
 }
