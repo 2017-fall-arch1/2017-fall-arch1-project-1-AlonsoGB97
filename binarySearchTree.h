@@ -14,18 +14,17 @@ typedef struct{
   BSTItem *head;
 } BST;
 
-extern int IlDoCheck;
 
 /* Create new Tree */
-BST *llAlloc();
+BSTItem_s *llAlloc();
 
 /* Add element into BST */
-void insertItem(BST *bs, char *s);
+BSTItem_s insertItem(BSTItem_s *head, char *newItem);
 
 /*Remove element into BST*/
 void removeItem(BST *bs);
 
 /*Print all elements of the BST*/
-void printItems(BST *bs, char *msg);
+void printItems(BSTItem_s *head);
 
 #endif /* included */
