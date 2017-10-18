@@ -1,18 +1,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include<assert.h>
+#include <string.h>
 #include "binarySearchTree.h"
 
 /* create a new tree*/
 struct BSTItem *llAlloc()
 {
-  BSTItem *tNode = (struct BSTItem *)malloc(sizeof(BSTItem));
+  struct BSTItem *tNode = (struct BSTItem *)malloc(sizeof(struct BSTItem));
   tNode = 0;
   return tNode;
 }
-
-struct BSTItem *insertItem (BSTItem *root, char *newItem)
+char * strdup(char *str)
+{
+  char *copy;
+  int len = 0;
+  for(len = 0; str[len]; len++)
+    ;
+  copy = (char *)malloc (len+1);
+  if(copy != NULL)
+    for(len = 0; str[i]; i++){
+      copy[i] = str[i];
+    }
+  copy[len] = 0; 
+  return copy;
+}
+struct BSTItem *insertItem (struct BSTItem *root, char *newItem)
 {
   if(root == NULL){
     root = llAlloc();
@@ -27,10 +40,10 @@ struct BSTItem *insertItem (BSTItem *root, char *newItem)
   else{
     root -> right = insertItem(root -> right, newItem);
   }
-  return head;
+  return root;
 }
 
-struct BSTItem  *removeItem(BSTItem *root, char *str)
+struct BSTItem  *removeItem(struct BSTItem *root, char *str)
 {
   if(root == NULL){
     return root;
@@ -49,10 +62,10 @@ struct BSTItem  *removeItem(BSTItem *root, char *str)
     }
     else if(root -> right == NULL) {
       struct BSTItem *temp = root -> left;
-      free(root)
+      free(root);
       return temp;
     }
-    struct node *temp = root-> right;
+    struct BSTItem *temp = root-> right;
     
     while(temp -> left != NULL){
       temp = temp -> left;
@@ -64,7 +77,7 @@ struct BSTItem  *removeItem(BSTItem *root, char *str)
   return root;
 }
 
-void printItems(BSTItem *head)
+void printItems(struct BSTItem *head)
 {
   if(head != NULL){
     printItems(head -> left);
@@ -72,24 +85,11 @@ void printItems(BSTItem *head)
     printItems(head -> right);
   }
 }
-
-char *strdup(char *str)
-{
-  char *copy;
-  copy = (char *) malloc(strlen(str) + 1);
-
-  if(copy != NULL){
-    for(len = 0; str[len]; len++)
-      copy[len] = str[len];
-    copy[len] = 0;
-  }
-  return copy;
-}
-
 int main()
 {
   struct BSTItem *tree = NULL;
-  tree = insertItem(tree, "a");
+  char a[] = "saas";
+  tree = insertItem(tree, a);
   //tree = insertItem(tree, "perro");
 
   printItems(tree);

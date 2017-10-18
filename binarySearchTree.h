@@ -6,19 +6,18 @@
 struct BSTItem{
   struct BSTItem *left;
   struct BSTItem *right;
-  char *str
-} 
+  char *str;
+};
 
 /* Create new Tree */
 struct BSTItem *llAlloc();
 
 /* Add element into BST */
-BSTItem insertItem(BSTItem *head, char *newItem);
+struct BSTItem *insertItem(struct BSTItem *head, char *newItem);
 
 /*Remove element into BST*/
-BSTItem removeItem(BSTItem *bs, char *str);
-
+struct BSTItem *removeItem(struct BSTItem *bs, char *str);
 /*Print all elements of the BST*/
-void printItems(BSTItem *head);
+void printItems(struct BSTItem *head);
 
 #endif /* included */
